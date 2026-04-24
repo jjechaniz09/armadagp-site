@@ -201,7 +201,7 @@
     <div class="modal" role="status">
       <button class="close" id="closeBtn" aria-label="Cerrar">×</button>
       <h2 id="modalTitle">¡Felicidades!</h2>
-      <p class="sub">Alma gana 🎉</p>
+      <p class="sub">Vamos al Alma!</p>
       <img class="photo" id="modalPhoto" alt="Los amigos en la despedida">
       <button class="again" id="againBtn">Girar otra vez</button>
       <button class="cerrar" id="cerrarBtn">Cerrar</button>
@@ -239,8 +239,8 @@
     path.setAttribute("stroke-opacity",".18");
     segGroup.appendChild(path);
 
-    // Label
-    const [lx,ly] = polar(CENTER,CENTER,RADIUS*0.64,mid);
+    // Label — radial orientation (reads from center outward); flipped on bottom half so it stays right-side-up.
+    const [lx,ly] = polar(CENTER,CENTER,RADIUS*0.62,mid);
     const text = document.createElementNS("http://www.w3.org/2000/svg","text");
     text.setAttribute("x", lx);
     text.setAttribute("y", ly);
@@ -248,9 +248,10 @@
     text.setAttribute("text-anchor","middle");
     text.setAttribute("dominant-baseline","central");
     text.setAttribute("font-family","'Archivo Black',system-ui,sans-serif");
-    text.setAttribute("font-size","10");
+    text.setAttribute("font-size","11");
     text.setAttribute("letter-spacing",".5");
-    text.setAttribute("transform", `rotate(${mid} ${lx} ${ly})`);
+    const rot = (mid > 90 && mid < 270) ? mid + 90 : mid - 90;
+    text.setAttribute("transform", `rotate(${rot} ${lx} ${ly})`);
     text.textContent = label;
     segGroup.appendChild(text);
   });
