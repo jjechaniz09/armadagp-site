@@ -259,8 +259,8 @@
     text.setAttribute("text-anchor","middle");
     text.setAttribute("dominant-baseline","central");
     text.setAttribute("font-family","'Archivo Black',system-ui,sans-serif");
-    text.setAttribute("font-size","11");
-    text.setAttribute("letter-spacing",".5");
+    text.setAttribute("font-size", label === "Claude Code" ? "8.5" : "11");
+    text.setAttribute("letter-spacing", label === "Claude Code" ? ".2" : ".5");
     const rot = (mid > 90 && mid < 270) ? mid + 90 : mid - 90;
     text.setAttribute("transform", `rotate(${rot} ${lx} ${ly})`);
     text.textContent = label;
