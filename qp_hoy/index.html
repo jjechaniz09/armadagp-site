@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111111">
+<title>Despedida 2025</title>
+<meta name="description" content="Despedida 2025 — spin the wheel.">
+<meta property="og:title" content="Despedida 2025">
+<meta property="og:description" content="Gira la ruleta. Alma gana.">
+<meta property="og:image" content="despedida_photo_1.png">
+<meta property="og:type" content="website">
+<meta name="robots" content="noindex">
+<link rel="preload" as="image" href="despedida_photo_1.png">
+<link rel="preload" as="image" href="despedida_photo_2.png">
+<link rel="preload" as="image" href="despedida_photo_3.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;padding:0;height:100%;background:#111;color:#fff;-webkit-tap-highlight-color:transparent}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:
+      repeating-linear-gradient(135deg,rgba(226,1,45,.035) 0 2px,transparent 2px 14px),
+      radial-gradient(1200px 600px at 50% -10%,rgba(226,1,45,.18),transparent 60%),
+      #111;
+    min-height:100dvh;
+    display:flex;flex-direction:column;align-items:center;
+    padding:max(20px,env(safe-area-inset-top)) 16px max(28px,env(safe-area-inset-bottom));
+    overflow-x:hidden;
+  }
+  h1{
+    font-family:"Archivo Black",system-ui,sans-serif;
+    font-weight:900;
+    font-size:clamp(28px,8vw,44px);
+    letter-spacing:.06em;
+    text-align:center;
+    margin:4px 0 18px;
+    text-transform:uppercase;
+    line-height:1;
+    text-shadow:0 2px 0 rgba(226,1,45,.35),0 0 30px rgba(226,1,45,.25);
+  }
+  .stage{
+    position:relative;
+    width:min(92vw,360px);
+    aspect-ratio:1/1;
+    display:flex;align-items:center;justify-content:center;
+    filter:drop-shadow(0 20px 40px rgba(0,0,0,.55));
+  }
+  .pointer{
+    position:absolute;
+    top:-6px;left:50%;transform:translateX(-50%);
+    width:0;height:0;
+    border-left:16px solid transparent;
+    border-right:16px solid transparent;
+    border-top:26px solid #fff;
+    filter:drop-shadow(0 3px 0 rgba(0,0,0,.4));
+    z-index:3;
+  }
+  .pointer::after{
+    content:"";position:absolute;top:-30px;left:-4px;
+    width:8px;height:8px;border-radius:50%;background:#E2012D;
+    box-shadow:0 0 14px #E2012D;
+  }
+  .wheel-wrap{
+    position:relative;width:100%;height:100%;
+    border-radius:50%;
+    background:#000;
+    box-shadow:
+      0 0 0 4px #E2012D,
+      0 0 0 8px #111,
+      0 0 0 10px rgba(226,1,45,.55),
+      0 0 60px rgba(226,1,45,.35) inset;
+  }
+  .wheel{
+    width:100%;height:100%;
+    transform:rotate(0deg);
+    transition:transform 0s linear;
+    will-change:transform;
+  }
+  .hub{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:18%;height:18%;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,#fff,#d6d6d6 55%,#9a9a9a);
+    box-shadow:0 0 0 4px #000, 0 0 0 6px #E2012D, 0 6px 18px rgba(0,0,0,.6);
+    z-index:2;pointer-events:none;
+  }
+  .spin-btn{
+    margin-top:26px;
+    appearance:none;border:none;outline:none;
+    background:#E2012D;color:#fff;
+    font-family:"Archivo Black",system-ui,sans-serif;
+    font-size:20px;letter-spacing:.18em;text-transform:uppercase;
+    padding:18px 48px;min-height:56px;
+    border-radius:14px;cursor:pointer;
+    box-shadow:0 6px 0 #8a0019,0 10px 24px rgba(226,1,45,.35);
+    transition:transform .05s ease, box-shadow .05s ease, opacity .2s ease;
+  }
+  .spin-btn:active{transform:translateY(3px);box-shadow:0 3px 0 #8a0019,0 6px 14px rgba(226,1,45,.35)}
+  .spin-btn:focus-visible{box-shadow:0 0 0 3px #fff,0 6px 0 #8a0019,0 10px 24px rgba(226,1,45,.35)}
+  .spin-btn:disabled{opacity:.55;cursor:not-allowed}
+  .hint{margin-top:14px;font-size:12px;color:#888;letter-spacing:.14em;text-transform:uppercase}
+
+  /* Modal */
+  .overlay{
+    position:fixed;inset:0;background:rgba(0,0,0,.72);
+    backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+    display:none;align-items:center;justify-content:center;
+    padding:16px;z-index:50;
+    animation:fadeIn .25s ease both;
+  }
+  .overlay.show{display:flex}
+  .modal{
+    position:relative;
+    width:min(94vw,420px);
+    background:linear-gradient(180deg,#1a0508,#0a0203);
+    border:2px solid #E2012D;
+    border-radius:20px;
+    padding:22px 18px 20px;
+    text-align:center;
+    box-shadow:0 0 0 1px rgba(255,255,255,.04),0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(226,1,45,.4);
+    animation:popIn .35s cubic-bezier(.2,1.2,.3,1) both;
+  }
+  .modal .close{
+    position:absolute;top:8px;right:10px;
+    background:transparent;border:none;color:#fff;
+    width:36px;height:36px;font-size:22px;line-height:1;cursor:pointer;
+    opacity:.75;
+  }
+  .modal .close:hover{opacity:1}
+  .modal h2{
+    font-family:"Archivo Black",system-ui,sans-serif;
+    font-size:clamp(26px,7vw,34px);
+    margin:4px 0 4px;letter-spacing:.04em;
+    color:#fff;text-shadow:0 0 20px rgba(226,1,45,.6);
+  }
+  .modal .sub{
+    font-weight:700;font-size:18px;margin:0 0 14px;color:#ffd2d9;letter-spacing:.02em;
+  }
+  .modal .photo{
+    display:block;width:100%;max-width:100%;max-height:58vh;
+    object-fit:cover;border-radius:14px;
+    border:2px solid #E2012D;
+    box-shadow:0 0 30px rgba(226,1,45,.45);
+    background:#000;
+  }
+  .modal .again{
+    margin-top:16px;width:100%;
+    appearance:none;border:none;
+    background:#E2012D;color:#fff;
+    font-family:"Archivo Black",system-ui,sans-serif;
+    font-size:16px;letter-spacing:.16em;text-transform:uppercase;
+    padding:16px 20px;border-radius:12px;cursor:pointer;
+    box-shadow:0 5px 0 #8a0019;
+  }
+  .modal .again:active{transform:translateY(2px);box-shadow:0 3px 0 #8a0019}
+  .modal .cerrar{
+    display:inline-block;margin-top:10px;padding:6px 8px;
+    font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+    background:none;border:none;color:#888;cursor:pointer;
+  }
+  .modal .cerrar:hover{color:#fff}
+
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes popIn{
+    from{opacity:0;transform:scale(.85) translateY(10px)}
+    to{opacity:1;transform:scale(1) translateY(0)}
+  }
+
+  @media (max-height:680px){
+    h1{margin-top:0;margin-bottom:10px}
+    .spin-btn{margin-top:18px;padding:16px 40px}
+  }
+</style>
+</head>
+<body>
+  <h1>Despedida 2025</h1>
+
+  <div class="stage">
+    <div class="pointer" aria-hidden="true"></div>
+    <div class="wheel-wrap">
+      <svg class="wheel" id="wheel" viewBox="0 0 200 200" aria-hidden="true">
+        <defs>
+          <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation=".3"/>
+          </filter>
+        </defs>
+        <g id="segments"></g>
+        <circle cx="100" cy="100" r="99" fill="none" stroke="#E2012D" stroke-width="1.2" opacity=".5"/>
+      </svg>
+    </div>
+    <div class="hub" aria-hidden="true"></div>
+  </div>
+
+  <button class="spin-btn" id="spinBtn" aria-label="Girar la ruleta">Girar</button>
+  <p class="hint">Toca para girar</p>
+
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal" role="status">
+      <button class="close" id="closeBtn" aria-label="Cerrar">×</button>
+      <h2 id="modalTitle">¡Felicidades!</h2>
+      <p class="sub">Alma gana 🎉</p>
+      <img class="photo" id="modalPhoto" alt="Los amigos en la despedida">
+      <button class="again" id="againBtn">Girar otra vez</button>
+      <button class="cerrar" id="cerrarBtn">Cerrar</button>
+    </div>
+  </div>
+
+<script>
+(function(){
+  const LABELS = ["Alma","Claude Code","Alma","Claude Code","Alma","Claude Code","Alma","Claude Code"];
+  const COLORS = ["#E2012D","#000000"];
+  const SEG_ANGLE = 360/LABELS.length;
+  const CENTER = 100, RADIUS = 98;
+
+  // Build segments
+  const segGroup = document.getElementById("segments");
+  function polar(cx,cy,r,deg){
+    const rad = (deg - 90) * Math.PI/180;
+    return [cx + r*Math.cos(rad), cy + r*Math.sin(rad)];
+  }
+  function arcPath(startAngle,endAngle){
+    const [x1,y1] = polar(CENTER,CENTER,RADIUS,startAngle);
+    const [x2,y2] = polar(CENTER,CENTER,RADIUS,endAngle);
+    const large = (endAngle-startAngle) > 180 ? 1 : 0;
+    return `M ${CENTER} ${CENTER} L ${x1} ${y1} A ${RADIUS} ${RADIUS} 0 ${large} 1 ${x2} ${y2} Z`;
+  }
+  LABELS.forEach((label,i)=>{
+    const start = i * SEG_ANGLE;
+    const end = start + SEG_ANGLE;
+    const mid = start + SEG_ANGLE/2;
+    const path = document.createElementNS("http://www.w3.org/2000/svg","path");
+    path.setAttribute("d", arcPath(start,end));
+    path.setAttribute("fill", COLORS[i%2]);
+    path.setAttribute("stroke","#fff");
+    path.setAttribute("stroke-width",".6");
+    path.setAttribute("stroke-opacity",".18");
+    segGroup.appendChild(path);
+
+    // Label
+    const [lx,ly] = polar(CENTER,CENTER,RADIUS*0.64,mid);
+    const text = document.createElementNS("http://www.w3.org/2000/svg","text");
+    text.setAttribute("x", lx);
+    text.setAttribute("y", ly);
+    text.setAttribute("fill","#fff");
+    text.setAttribute("text-anchor","middle");
+    text.setAttribute("dominant-baseline","central");
+    text.setAttribute("font-family","'Archivo Black',system-ui,sans-serif");
+    text.setAttribute("font-size","10");
+    text.setAttribute("letter-spacing",".5");
+    text.setAttribute("transform", `rotate(${mid} ${lx} ${ly})`);
+    text.textContent = label;
+    segGroup.appendChild(text);
+  });
+
+  // Spin logic
+  const wheel = document.getElementById("wheel");
+  const btn = document.getElementById("spinBtn");
+  const overlay = document.getElementById("overlay");
+  const photoEl = document.getElementById("modalPhoto");
+  const againBtn = document.getElementById("againBtn");
+  const closeBtn = document.getElementById("closeBtn");
+  const cerrarBtn = document.getElementById("cerrarBtn");
+
+  const ALMA_INDICES = LABELS.map((l,i)=>l==="Alma"?i:-1).filter(i=>i>=0);
+  const PHOTOS = [
+    {src:"despedida_photo_1.png", alt:"Los amigos brindando en la despedida"},
+    {src:"despedida_photo_2.png", alt:"Retrato en el lobby del hotel"},
+    {src:"despedida_photo_3.png", alt:"Los amigos posando en la despedida"}
+  ];
+
+  let currentRotation = 0;
+  let spinning = false;
+  let lastPhoto = -1;
+
+  function pickPhoto(){
+    let i;
+    do { i = Math.floor(Math.random()*PHOTOS.length); }
+    while(PHOTOS.length>1 && i===lastPhoto);
+    lastPhoto = i;
+    return PHOTOS[i];
+  }
+
+  function spin(){
+    if(spinning) return;
+    spinning = true;
+    btn.disabled = true;
+
+    // Pick a random Alma segment
+    const segIdx = ALMA_INDICES[Math.floor(Math.random()*ALMA_INDICES.length)];
+    const segCenter = segIdx * SEG_ANGLE + SEG_ANGLE/2; // clockwise from top
+    const jitter = (Math.random()*6 - 3); // ±3°
+    const turns = 5 + Math.floor(Math.random()*4); // 5-8
+
+    // We want pointer (at top, 0°) to land on segCenter.
+    // After rotation R, segment center appears at (segCenter + R) mod 360.
+    // So (segCenter + R) mod 360 === 0 (plus jitter). Normalized:
+    // target rotation (mod 360) = (360 - segCenter) + jitter
+    const targetMod = ((360 - segCenter) % 360 + 360) % 360 + jitter;
+
+    // Accumulate so the wheel always moves forward with full turns.
+    const currentMod = ((currentRotation % 360) + 360) % 360;
+    let delta = targetMod - currentMod;
+    if(delta <= 0) delta += 360;
+    const finalRotation = currentRotation + turns*360 + delta;
+    currentRotation = finalRotation;
+
+    wheel.style.transition = "transform 4s cubic-bezier(0.17,0.67,0.24,1)";
+    // Force reflow then apply
+    // eslint-disable-next-line no-unused-expressions
+    wheel.getBoundingClientRect();
+    wheel.style.transform = `rotate(${finalRotation}deg)`;
+
+    if(navigator.vibrate){ try{ navigator.vibrate(8); }catch(e){} }
+
+    setTimeout(showResult, 4200);
+  }
+
+  function showResult(){
+    const p = pickPhoto();
+    photoEl.src = p.src;
+    photoEl.alt = p.alt;
+    overlay.classList.add("show");
+    if(navigator.vibrate){ try{ navigator.vibrate([30,40,30]); }catch(e){} }
+  }
+
+  function closeModal(){
+    overlay.classList.remove("show");
+    spinning = false;
+    btn.disabled = false;
+  }
+
+  function spinAgain(){
+    closeModal();
+    // tiny delay so the modal fade-out doesn't fight with the spin start
+    setTimeout(spin, 120);
+  }
+
+  btn.addEventListener("click", spin);
+  wheel.addEventListener("click", ()=>{ if(!spinning) spin(); });
+  againBtn.addEventListener("click", spinAgain);
+  closeBtn.addEventListener("click", closeModal);
+  cerrarBtn.addEventListener("click", closeModal);
+  overlay.addEventListener("click", (e)=>{ if(e.target===overlay) closeModal(); });
+  document.addEventListener("keydown", (e)=>{
+    if(e.key==="Escape" && overlay.classList.contains("show")) closeModal();
+    if(e.key===" " && !spinning && !overlay.classList.contains("show")){ e.preventDefault(); spin(); }
+  });
+})();
+</script>
+</body>
+</html>
