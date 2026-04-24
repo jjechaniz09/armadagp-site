@@ -14,6 +14,8 @@
 <link rel="preload" as="image" href="despedida_photo_1.png">
 <link rel="preload" as="image" href="despedida_photo_2.png">
 <link rel="preload" as="image" href="despedida_photo_3.png">
+<link rel="preload" as="image" href="despedida_photo_4.jpeg">
+<link rel="preload" as="image" href="despedida_photo_5.jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
@@ -278,9 +280,11 @@
 
   const ALMA_INDICES = LABELS.map((l,i)=>l==="Alma"?i:-1).filter(i=>i>=0);
   const PHOTOS = [
-    {src:"despedida_photo_1.png", alt:"Los amigos brindando en la despedida"},
-    {src:"despedida_photo_2.png", alt:"Retrato en el lobby del hotel"},
-    {src:"despedida_photo_3.png", alt:"Los amigos posando en la despedida"}
+    {src:"despedida_photo_1.png",  alt:"Los amigos brindando en la despedida"},
+    {src:"despedida_photo_2.png",  alt:"Retrato en el lobby del hotel"},
+    {src:"despedida_photo_3.png",  alt:"Los amigos posando en la despedida"},
+    {src:"despedida_photo_4.jpeg", alt:"Momento épico de la despedida"},
+    {src:"despedida_photo_5.jpeg", alt:"Despedida en Las Vegas"}
   ];
 
   let currentRotation = 0;
